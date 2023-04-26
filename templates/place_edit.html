@@ -1,0 +1,14 @@
+{% extends "main.html" %}
+{% block content %}
+
+<h2>Édition d'un lieu</h2>
+
+<form method="POST">
+  <input name="place_id" type="hidden" value="{{ place.id if place }}"></input>
+  nom <input name="name" value="{{ place.name or '' if place }}" style="width: 100%;"></input>
+  <br>
+  description <textarea name="description" rows="10">{{ place.description or '' if place }}</textarea>
+  <input type="submit" value="Enregistrer"></input>
+</form>
+
+{% endblock %}

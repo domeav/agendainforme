@@ -1,0 +1,134 @@
+{% extends "main.html" %}
+{% block content %}
+
+<h2>{{ category_label }}</h2>
+
+<p>
+  {% if category == 'expositions' %}
+  Autres pistes exploratoires : <a href="http://www.slash-paris.com/">Slash/Paris</a>
+  {% elif category == 'concerts' %}
+  « nébuleuse des amateurs de musique hors-piste » ( © MAB )<br>
+  Autres pistes exploratoires : <a href="https://uneminuteparseconde.tumblr.com/">une minute par seconde</a>
+  {% endif %}
+</p>
+
+<div>
+{% for month, dates in months.items() %}
+<mark>{{ month }}</mark>
+{% for date, ids in dates.items() %}
+<a href="#{{date.strftime('%Y-%m-%d')}}-{{ids[0]}}">{{date.strftime('%d')}}</a>
+{% endfor %}
+{% endfor %}
+</div>
+
+{% for event in events %}
+{% include "event.html" %}
+{% endfor %}
+
+<blockquote>
+  {% if category == 'cine_regul' %}
+  <p>
+    « La vie, c'est ce qui vous arrive alors que vous étiez en train de prévoir autre chose » ( Jeanne MOREAU )
+  </p>
+  <p>
+    « Etre aimé, c'est se consumer dans la flamme. Aimer, c'est luire d'une lumière inépuisable.  » ( Rainer Maria RILKE )
+  </p>
+  {% elif category == 'cine_unique' %}
+  <p>
+    « Dans les trous de mémoire on se cache Dans ses montagnes on s'égare » ( Jacques PREVERT )
+  </p>
+  <p>
+    « Qui n'a connu ces admirables heures, véritables fêtes du
+    cerveau, où les sens plus attentifs perçoivent des sensations plus
+    retentissantes, où le ciel d'un azur plus transparent s'enfonce
+    dans un abîme plus infini, où les sons tintent musicalement, où
+    les couleurs parlent, et où les parfums racontent des mondes
+    d'idées? » ( BAUDELAIRE )
+  </p>
+  {% elif category == 'cine_retro' %}
+  <p>
+    « Le temps vide de la méditation est, à la vérité, le seul temps
+    plein. Nous ne devrions jamais rougir d'accumuler des instants
+    vacants. Vacants en apparence, remplis en fait. Méditer est un
+    loisir suprême, dont le secret s'est perdu ». ( Emil CIORAN, De
+    l'inconvénient d'être né )
+  </p>
+  <p>
+  « L'art ne peut se relever d'être devenu marchandise. Cette
+  perversion du sens est irrémédiable. Dieu n'a jamais été à vendre :
+  il est mort sans avoir été abaissé. Le sens a besoin d'aller vers
+  quelque chose d'intact: dès qu'il se négocie, il se dégrade. » (
+  Bernard NOËL )
+  </p>
+  {% elif category == 'expositions' %}
+  <p>
+    « En lésant la langue, on lèse toujours le sentiment et le cerveau;
+    on obscurcit le monde, on l'anesthésie par le froid » ( KAFKA )
+  </p>
+  <p>
+    « Une fois la tempête passée, tu te demanderas comment tu as fait
+    pour la traverser, comment tu as fait pour survivre. Tu ne seras pas
+    très sûr, en fait, qu'elle soit vraiment achevée.  Mais sois certain
+    d'une chose ; une fois que tu auras essuyé cette tempête, tu ne seras
+    plus le même. Tel est le sens de cette tempête. » ( Haruki MURAKAMI
+    “Kafka sur le rivage” )
+  </p>
+  {% elif category == 'ateliers' %}
+  <p>
+    « Il faut confronter des idées vagues avec des images claires »
+    ( Jean-Luc GODARD )
+  </p>
+    {% elif category == 'radio' %}
+  <p>
+    « Là où le sol s'est enlaidi, là où toute poésie a disparu du
+    paysage, les imaginations s'éteignent, les esprits s'appauvrissent, la
+    routine et la servilité s'emparent des âmes et les disposent à la
+    torpeur et à la mort. » ( Elisée RECLUS )
+  </p>
+  <p>
+    « Tous les moyens sont bons, mais mon but et mes motivations sont pure folie »
+    ( Le capitaine Achab dans <i>Moby Dick</i> de Herman MELVILLE )
+  </p>
+    {% elif category == 'workshops' %}
+  <p>
+    « Il n’est pas d’objet plus profond, plus mystérieux, plus fécond,
+    plus ténébreux, plus éblouissant qu’une fenêtre éclairée d’une
+    chandelle. Ce qu’on peut voir au soleil est toujours moins intéressant
+    que ce qui se passe derrière une vitre. Dans ce trou noir ou lumineux
+    vit la vie, rêve la vie, souffre la vie. » ( Charles BAUDELAIRE,
+    Petits poèmes en prose, 1869 )
+  </p>
+  <p>
+    « Dès qu’on se jette au lit, ou par terre, le temps ne coule plus
+    et, cesse de compter. L’histoire est le produit d’une humanité debout.
+    L’homme, en tant qu’animal vertical, devait fatalement prendre
+    l’habitude de regarder devant soi, non seulement dans l’espace, mais
+    encore dans le temps.  A quelle humble origine remonte l’idée d’avenir
+    ! » ( CIORAN, Cahiers 1957/1972 )
+  </p>
+    {% elif category == 'divers' %}
+  <p>
+    « After the music is over it's gone in the air. You can never capture it again. »
+    ( Eric DOLPHY )
+  </p>
+  {% elif category == 'concerts' %}
+  <p>
+    « Le repentir est une seconde faute. »
+    ( SPINOZA )
+  </p>
+  {% endif %}
+</blockquote>
+
+<script>
+  document.querySelectorAll('.delete-link').forEach(el => {
+      el.addEventListener('click', async event => {
+	  event.preventDefault();
+	  if (confirm('Supprimer l\'événement ?')){
+	      const response = await fetch(el.href);
+	      const data = await response.text();
+	      location.reload();
+	  }
+      })});
+</script>
+
+{% endblock %}

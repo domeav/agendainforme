@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+{% block content %}
+
+<h2>Derniers événements créés</h2>
+
+{% for event in events %}
+<h3>{{ event.category }}, créé le {{ event.creation_date.strftime('%d %B %Y') }}</h3>
+{% include "event.html" %}
+{% endfor %}
+
+
+<script>
+  document.querySelectorAll('.delete-link').forEach(el => {
+      el.addEventListener('click', async event => {
+	  event.preventDefault();
+	  if (confirm('Supprimer l\'événement ?')){
+	      const response = await fetch(el.href);
+	      const data = await response.text();
+	      location.reload();
+	  }
+      })});
+</script>
+
+{% endblock %}

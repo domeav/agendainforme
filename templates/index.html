@@ -1,0 +1,34 @@
+{% extends "main.html" %}
+{% block content %}
+<p class="notice">
+  <b>Avertissement/précaution (toujours de vigueur)</b><br>
+  Vérifiez les informations (lieux, horaires) avant de vous déplacer !
+</p>
+
+<p>
+  <ul>
+    <li><a href="{{ url_for('category', name='cine_regul') }}">{{ categories['cine_regul'] }}</a></li>
+    <li><a href="{{ url_for('category', name='cine_unique') }}">{{ categories['cine_unique'] }}</a></li>
+    <li><a href="{{ url_for('category', name='cine_retro') }}">{{ categories['cine_retro'] }}</a></li>
+    <li><a href="{{ url_for('category', name='expositions') }}">{{ categories['expositions'] }}</a></li>
+    <li><a href="{{ url_for('category', name='ateliers') }}">{{ categories['ateliers'] }}</a></li>
+    <li><a href="{{ url_for('category', name='radio') }}">{{ categories['radio'] }}</a></li>
+    <li><a href="{{ url_for('category', name='workshops') }}">{{ categories['workshops'] }}</a></li>
+    <li>
+      <a href="{{ url_for('category', name='divers') }}">{{ categories['divers'] }}</a><br>
+      (lecture / danse / performances, conférence…)
+    </li>
+    <li><a href="{{ url_for('category', name='concerts') }}">{{ categories['concerts'] }}</a></li>
+  </ul>
+</p>
+<p>
+  <a href="{{ url_for('last_created') }}">Derniers ajouts</a>
+</p>
+<blockquote>
+  <p>
+    « Sans l'idée de la révolte et de la liberté, la musique devient
+    cynique, elle appelle à la victoire des maîtres, elle dit la
+    mort. » ( Philippe CARLES & Jean-Louis COMOLLI )
+  </p>
+</blockquote>
+{% endblock %}

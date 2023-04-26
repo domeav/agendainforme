@@ -1,0 +1,6 @@
+Flask
+markdown
+peewee
+pandoc
+requests
+Flask-HTTPAuth

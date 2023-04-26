@@ -1,0 +1,6 @@
+*~
+__pycache__
+agenda.db
+py-dist
+settings.py
+backup

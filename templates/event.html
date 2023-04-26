@@ -1,0 +1,35 @@
+<article id="{{event.date_start.strftime('%Y-%m-%d') if event.date_start}}-{{event.id}}"
+	 {% if event.highlight %}style="border-color: red; border-width: 3px;"{% endif %}>
+  <b>
+    {% if event.date_start and event.date_end %}
+    {% if event.date_start.year ==  event.date_end.year%}
+    Du {{ event.date_start.strftime('%A %d %B') }} au {{ event.date_end.strftime('%d %B %Y') }}</td>
+    {% else %}
+    Du {{ event.date_start.strftime('%A %d %B %Y') }} au {{ event.date_end.strftime('%d %B %Y') }}</td>
+    {% endif %}
+    {% elif event.date_start %}
+    {{ event.date_start.strftime('%A %d %B %Y') }}
+    {% else %}
+    Permanent
+    {% endif %}
+  </b>
+  {{ event.time_details or '' }}
+  {% if event.external_link %}<a href="{{event.external_link}}">🔗</a>{% endif %}
+  {% if session.get('admin') == True %}
+  <a href="{{ url_for('edit', event_id=event.id) }}">éditer</a>
+  <a href="{{ url_for('edit', orig_event_id=event.id) }}">dupliquer</a>
+  <a class="delete-link" href="{{ url_for('delete', event_id=event.id) }}">supprimer</a>
+  {% endif %}
+<div>
+  <aside><div>{{ md(event.place)|safe }}</div></aside>
+  {{ md(event.description)|safe }}
+  {% if event.price %}
+  {{ md(event.price)|safe }}
+  {% endif %}
+</div>
+{% if session.get('admin') == True %}
+<div>
+  [ Créé par {{event.created_by}}{% if event.creation_date %} le {{event.creation_date.strftime('%d %B %Y')}}{% endif %} ]
+</div>
+{% endif %}
+</article>

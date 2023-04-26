@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+{% block content %}
+
+<h2>Édition d'un rendez-vous</h2>
+
+<form method="POST">
+  <input name="event_id" type="hidden" value="{{ event.id if event and not duplicate}}"></input>
+  <input name="created_by" type="hidden" value="{{ event.created_by if event else session['username'] }}"></input>
+  Catégorie
+  <select name="category">
+    {% for cat, label in categories.items() %}
+    <option value="{{ cat }}" {{ 'selected' if cat == category }}>{{ label }}</option>
+    {% endfor %}
+  </select>
+  <br>
+  date (de début) <input name="date_start" type="date" value="{{ event.date_start if event }}"></input>
+  date de fin (optionnel) <input name="date_end" type="date" value="{{ event.date_end if event }}"></input>
+  <br>
+  détails sur l'horaire <input name="time_details" value="{{ event.time_details or '' if event }}" style="width: 100%;"></input>
+  <br>
+  lieu
+  <select id="place-list">
+    <option value="0">--Copier les infos d'un lieu--</option>
+    {% for place in places %}
+    <option value="{{ place.id }}">{{ place.name }}</option>
+    {% endfor %}
+  </select>
+  <textarea id="place" name="place" rows="8">{{ event.place or '' if event }}</textarea>
+  <br>
+  description <textarea name="description" rows="10">{{ event.description or '' if event }}</textarea>
+  <br/>
+  prix <input name="price" value="{{ event.price or '' if event }}" style="width: 100%;"></input>
+  <br/>
+  lien externe <input name="external_link" value="{{ event.external_link or '' if event }}" style="width: 100%;"></input>
+  <br/>
+  mis en avant <input name="highlight" type="checkbox" {{ 'checked' if event and event.highlight }}>
+  <br/>
+  <input type="submit" value="Enregistrer"></input>
+</form>
+
+<script>
+  var el = document.querySelector("#place-list");
+  el.addEventListener('change', async () => {
+      const response = await fetch('/api/place/' + el.value);
+      const data = await response.text();
+      document.querySelector("#place").textContent = data;
+  });
+</script>
+
+{% endblock %}

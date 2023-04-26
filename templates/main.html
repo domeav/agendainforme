@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+  <head>
+    <title>l'Agenda Informe</title>
+    <link rel="stylesheet" href="/static/simple.min.css">
+    <meta charset="UTF-8"> 
+  </head>
+  <body>
+    
+    <h1><a href="{{ url_for('index') }}">l'Agenda Informe</a></h1>
+
+    {% if session.get('admin') == True %}
+    <ul>
+      <li><a href="{{ url_for('edit', category=category) }}">Créer un rendez-vous</a></li>
+      <li><a href="{{ url_for('places') }}">Gérer les lieux</a>/<a href="{{ url_for('place_edit') }}">Nouveau lieu</a></li>
+      <li><a href="{{ url_for('logout') }}">Déconnexion</a></li>
+    </ul>
+    {% endif %}
+
+    
+    {% block content %}{% endblock %}
+    
+  </body>
+</html>
